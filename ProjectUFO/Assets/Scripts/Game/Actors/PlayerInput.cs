@@ -35,11 +35,6 @@ namespace Assets.Scripts.Game.Actors
 			if (!movementController.IsMoving)
 			{
 				Vector2 destination = HandleInput(); 
-				/*if (pathSegmentsPassed < path.Count)
-				{
-					destination = path[pathSegmentsPassed];
-					Debug.Log("Replay movement");
-				}*/
 
 				if (destination != (Vector2)transform.position)
 				{
