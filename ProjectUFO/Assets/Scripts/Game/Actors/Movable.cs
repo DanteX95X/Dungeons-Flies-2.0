@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Assets.Scripts.Game
+namespace Assets.Scripts.Game.Actors
 {
 	public class Movable : MonoBehaviour
 	{
@@ -75,6 +75,18 @@ namespace Assets.Scripts.Game
 			Level.Grid[transform.position].Units.Remove(gameObject);
 			this.destination = destination;
 			movementAxis = (destination - (Vector2)transform.position).normalized;
+		}
+
+		public void MoveToDestination(Vector2 destination)
+		{
+			Field dummy = null;
+			if (isMoving || !Level.Grid.TryGetValue(destination, out dummy))
+				return;
+
+			Level.Grid[transform.position].Units.Remove(gameObject);
+			transform.position = new Vector3(destination.x, destination.y, transform.position.z);
+			Level.Grid[transform.position].Units.Add(gameObject);
+			this.destination = transform.position;
 		}
 
 		#endregion

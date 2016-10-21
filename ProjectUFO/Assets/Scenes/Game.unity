@@ -281,7 +281,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!1001 &1003176242
+--- !u!1001 &610285641
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -320,6 +320,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114000014181063668, guid: 5aff87cc3de244b15bbdf2c320f49e9e,
+        type: 2}
+      propertyPath: playerPrefab
+      value: 
+      objectReference: {fileID: 1000012598920258, guid: 5aff87cc3de244b15bbdf2c320f49e9e,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5aff87cc3de244b15bbdf2c320f49e9e, type: 2}
   m_IsPrefabParent: 0
