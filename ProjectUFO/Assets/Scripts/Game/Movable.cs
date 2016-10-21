@@ -20,6 +20,15 @@ namespace Assets.Scripts.Game
 
 		#endregion
 
+		#region properties
+
+		public bool IsMoving
+		{
+			get { return isMoving; }
+		}
+
+		#endregion
+
 		#region methods
 
 		void Start()
