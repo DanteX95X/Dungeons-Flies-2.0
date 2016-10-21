@@ -10,6 +10,8 @@ namespace Assets.Scripts.Game
 		Vector2 destination;
 		Vector2 movementAxis;
 
+		bool isMoving = false;
+
 		[SerializeField]
 		static float speed = 3;
 
@@ -35,7 +37,6 @@ namespace Assets.Scripts.Game
 			}
 
 			destination = (Vector2)transform.position;
-			StartMovement(new Vector2(0,1));
 		}
 
 		void Update()
@@ -46,6 +47,7 @@ namespace Assets.Scripts.Game
 				{
 					transform.position = new Vector3(destination.x, destination.y, transform.position.z);
 					Level.Grid[transform.position].Units.Add(gameObject);
+					isMoving = false;
 				}
 				else
 				{
@@ -56,6 +58,11 @@ namespace Assets.Scripts.Game
 
 		public void StartMovement(Vector2 destination)
 		{
+			Field dummy = null;
+			if (isMoving || !Level.Grid.TryGetValue(destination, out dummy))
+				return;
+
+			isMoving = true;
 			Level.Grid[transform.position].Units.Remove(gameObject);
 			this.destination = destination;
 			movementAxis = (destination - (Vector2)transform.position).normalized;
