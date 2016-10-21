@@ -9,13 +9,13 @@ namespace Assets.Scripts.Game
 
 		#region variables
 
-		List<Field> neighbours = new List<Field>();
+		Dictionary<Vector2, Field> neighbours = new Dictionary<Vector2, Field>();
 
 		#endregion
 
 		#region properties
 
-		public List<Field> Neighbours
+		public Dictionary<Vector2, Field> Neighbours
 		{
 			get { return neighbours; }
 			set { neighbours = value; }

@@ -8,13 +8,13 @@ namespace Assets.Scripts.Game
 	{
 		#region variables
 
-		static Dictionary<Vector3, Field> grid = new Dictionary<Vector3, Field>();
+		static Dictionary<Vector2, Field> grid = new Dictionary<Vector2, Field>();
 
 		#endregion
 
 		#region properties
 
-		public static Dictionary<Vector3, Field> Grid
+		public static Dictionary<Vector2, Field> Grid
 		{
 			get { return grid; }
 			set { grid = value; }
