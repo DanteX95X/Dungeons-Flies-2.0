@@ -26,7 +26,7 @@ namespace Assets.Scripts.States
 			{
 				for (int j = 0; j < columns; ++j)
 				{
-					GameObject currentField = Instantiate(field, new Vector3(i, j), Quaternion.identity) as GameObject;
+					GameObject currentField = Instantiate(field, new Vector3(i, j, 1), Quaternion.identity) as GameObject;
 					currentField.transform.parent = grid.transform;
 					Level.Grid[currentField.transform.position] = currentField.GetComponent<Field>();
 				}
@@ -35,16 +35,15 @@ namespace Assets.Scripts.States
 			foreach (Field field in Level.Grid.Values)
 			{
 				List<Vector2> displacements = new List<Vector2> { new Vector2(1, 0), new Vector2(0, 1), new Vector2(-1, 0), new Vector2(0, -1) };
-				foreach (Vector3 displacement in displacements)
+				foreach (Vector2 displacement in displacements)
 				{
 					Field neighbour = null;
-					Level.Grid.TryGetValue(field.transform.position + displacement, out neighbour);
+					Level.Grid.TryGetValue((Vector2)field.transform.position + displacement, out neighbour);
 
 					if (neighbour != null)
 						field.Neighbours[displacement] = neighbour;
 				}
 
-				Debug.Log(field.Neighbours.Values.Count);
 			}
 		}
 

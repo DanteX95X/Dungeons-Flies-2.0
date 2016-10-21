@@ -10,6 +10,7 @@ namespace Assets.Scripts.Game
 		#region variables
 
 		Dictionary<Vector2, Field> neighbours = new Dictionary<Vector2, Field>();
+		List<GameObject> units = new List<GameObject>();
 
 		#endregion
 
@@ -19,6 +20,12 @@ namespace Assets.Scripts.Game
 		{
 			get { return neighbours; }
 			set { neighbours = value; }
+		}
+
+		public List<GameObject> Units
+		{
+			get { return units; }
+			set { units = value; }
 		}
 
 		#endregion
