@@ -21,7 +21,6 @@ namespace Assets.Scripts.Game.Actors
 		void Start()
 		{
 			movementController = GetComponent<Movable>();
-			//inputController = GetComponent<PlayerInput>();
 
 			path = new List<Vector2>();
 
