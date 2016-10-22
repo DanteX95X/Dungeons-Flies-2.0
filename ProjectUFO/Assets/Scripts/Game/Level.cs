@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Game.Map;
+using Assets.Scripts.Game.Actors;
 
 namespace Assets.Scripts.Game
 {
@@ -9,8 +10,8 @@ namespace Assets.Scripts.Game
 	{
 		#region variables
 
-		Dictionary<Vector2, Field> grid = new Dictionary<Vector2, Field>();
-		Vector3 playerInitialPosition = new Vector3(3, 3, 0);
+		Dictionary<Vector2, Field> grid;
+		Player player;
 
 		#endregion
 
@@ -22,12 +23,18 @@ namespace Assets.Scripts.Game
 			set { grid = value; }
 		}
 
-		public Vector2 PlayerInitialPosition
+		public Player ActivePlayer
 		{
-			get { return playerInitialPosition; }
-			set { playerInitialPosition = value; }
+			get { return player; }
+			set { player = value; }
 		}
 
+		public Level()
+		{
+			grid = new Dictionary<Vector2, Field>();
+			player = null;
+		}
+			
 		#endregion
 	}
 }

@@ -9,6 +9,11 @@ namespace Assets.Scripts.Game.Map
 		{
 			throw new NotImplementedException();
 		}
+
+		void Start()
+		{
+			type = FieldType.CLEAR;
+		}
 	}
 }
 

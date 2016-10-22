@@ -12,6 +12,8 @@ namespace Assets.Scripts.Game.Map
 		Dictionary<Vector2, Field> neighbours = new Dictionary<Vector2, Field>();
 		List<GameObject> units = new List<GameObject>();
 
+		protected FieldType type;
+
 		#endregion
 
 		#region properties
@@ -26,6 +28,11 @@ namespace Assets.Scripts.Game.Map
 		{
 			get { return units; }
 			set { units = value; }
+		}
+
+		public FieldType Type
+		{
+			get { return type; }
 		}
 
 		#endregion

@@ -50,7 +50,7 @@ namespace Assets.Scripts.States
 
 			}
 
-			Instantiate(player, Game.Game.Instance.CurrentLevel.PlayerInitialPosition, Quaternion.identity);
+			Instantiate(player, new Vector3(0,0,0), Quaternion.identity);
 		}
 
 		public override void UpdateLoop()
