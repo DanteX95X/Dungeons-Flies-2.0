@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using Assets.Scripts.Game.Map;
 
 namespace Assets.Scripts.Game.Actors
 {
@@ -24,8 +25,14 @@ namespace Assets.Scripts.Game.Actors
 
 			path = new List<Vector2>();
 
-			path.Add(Level.Grid[transform.position].transform.position);
-			++pathSegmentsPassed;
+			Field startingField = null;
+			Game.Instance.CurrentLevel.Grid.TryGetValue(transform.position, out startingField);
+
+			if (startingField)
+			{
+				path.Add(startingField.transform.position);
+				++pathSegmentsPassed;
+			}
 
 		}
 

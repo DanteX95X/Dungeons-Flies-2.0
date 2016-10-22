@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using Assets.Scripts.Game.Map;
 
 namespace Assets.Scripts.Game.Actors
 {
@@ -35,8 +36,9 @@ namespace Assets.Scripts.Game.Actors
 			if (!movementController.IsMoving)
 			{
 				Vector2 destination = HandleInput(); 
+				Field dummy = null;
 
-				if (destination != (Vector2)transform.position)
+				if (destination != (Vector2)transform.position && Game.Instance.CurrentLevel.Grid.TryGetValue(destination, out dummy))
 				{
 					playerController.Move(destination);
 					foreach (Actor actor in FindObjectsOfType<Actor>())

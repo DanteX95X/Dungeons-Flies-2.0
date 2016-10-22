@@ -2,15 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Assets.Scripts.Game
+namespace Assets.Scripts.Game.Map
 {
-	public class Field : MonoBehaviour 
+	public abstract class Field : MonoBehaviour 
 	{
 
 		#region variables
 
 		Dictionary<Vector2, Field> neighbours = new Dictionary<Vector2, Field>();
 		List<GameObject> units = new List<GameObject>();
+
+		protected FieldType type;
 
 		#endregion
 
@@ -28,6 +30,11 @@ namespace Assets.Scripts.Game
 			set { units = value; }
 		}
 
+		public FieldType Type
+		{
+			get { return type; }
+		}
+
 		#endregion
 
 		#region methods
@@ -41,6 +48,8 @@ namespace Assets.Scripts.Game
 		{
 		
 		}
+
+		protected abstract void ApplyEffect();
 
 		#endregion
 	}

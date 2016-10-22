@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Assets.Scripts.Game.Map;
 
 namespace Assets.Scripts.Game.Actors
 {
@@ -35,14 +36,14 @@ namespace Assets.Scripts.Game.Actors
 		{
 			transform.position = new Vector3( Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), transform.position.z);
 			Field occupiedField = null;
-			if (Level.Grid.TryGetValue(transform.position, out occupiedField))
+			if (Game.Instance.CurrentLevel.Grid.TryGetValue(transform.position, out occupiedField))
 			{
 				occupiedField.Units.Add(gameObject);
 			}
 			else
 			{
 				Debug.Log("Could not find proper starting field");
-				Destroy(gameObject);
+				Destroy(this);
 			}
 
 			destination = (Vector2)transform.position;
@@ -55,7 +56,7 @@ namespace Assets.Scripts.Game.Actors
 				if (Mathf.Abs(destination.x - transform.position.x) < proximityThreshold && Mathf.Abs(destination.y - transform.position.y) < proximityThreshold)
 				{
 					transform.position = new Vector3(destination.x, destination.y, transform.position.z);
-					Level.Grid[transform.position].Units.Add(gameObject);
+					Game.Instance.CurrentLevel.Grid[transform.position].Units.Add(gameObject);
 					isMoving = false;
 				}
 				else
@@ -68,11 +69,11 @@ namespace Assets.Scripts.Game.Actors
 		public void StartMovement(Vector2 destination)
 		{
 			Field dummy = null;
-			if (isMoving || !Level.Grid.TryGetValue(destination, out dummy))
+			if (isMoving || !Game.Instance.CurrentLevel.Grid.TryGetValue(destination, out dummy))
 				return;
 
 			isMoving = true;
-			Level.Grid[transform.position].Units.Remove(gameObject);
+			Game.Instance.CurrentLevel.Grid[transform.position].Units.Remove(gameObject);
 			this.destination = destination;
 			movementAxis = (destination - (Vector2)transform.position).normalized;
 		}
@@ -80,12 +81,12 @@ namespace Assets.Scripts.Game.Actors
 		public void MoveToDestination(Vector2 destination)
 		{
 			Field dummy = null;
-			if (isMoving || !Level.Grid.TryGetValue(destination, out dummy))
+			if (isMoving || !Game.Instance.CurrentLevel.Grid.TryGetValue(destination, out dummy))
 				return;
 
-			Level.Grid[transform.position].Units.Remove(gameObject);
+			Game.Instance.CurrentLevel.Grid[transform.position].Units.Remove(gameObject);
 			transform.position = new Vector3(destination.x, destination.y, transform.position.z);
-			Level.Grid[transform.position].Units.Add(gameObject);
+			Game.Instance.CurrentLevel.Grid[transform.position].Units.Add(gameObject);
 			this.destination = transform.position;
 		}
 

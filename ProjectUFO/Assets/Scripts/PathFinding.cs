@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using UnityEngine;
+using Assets.Scripts.Game.Map;
 using Assets.Scripts.Game;
 
 namespace Assets.Scripts
@@ -33,7 +34,7 @@ namespace Assets.Scripts
 			frontier.Push (currentField, 0);
 			costs [currentField] = 0;
 
-			while (visited.Count != Level.Grid.Count)
+			while (visited.Count != 20)
 			{
 				currentField = frontier.Pop();
 				visited.Add (currentField);
