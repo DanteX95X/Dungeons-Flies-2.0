@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Assets.Scripts.Game.Map;
 
 namespace Assets.Scripts.Game.Actors
 {

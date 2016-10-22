@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Assets.Scripts.Game;
+using Assets.Scripts.Game.Map;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.States

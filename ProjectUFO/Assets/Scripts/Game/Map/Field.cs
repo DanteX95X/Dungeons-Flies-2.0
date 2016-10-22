@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Assets.Scripts.Game
+namespace Assets.Scripts.Game.Map
 {
-	public class Field : MonoBehaviour 
+	public abstract class Field : MonoBehaviour 
 	{
 
 		#region variables
@@ -41,6 +41,8 @@ namespace Assets.Scripts.Game
 		{
 		
 		}
+
+		protected abstract void ApplyEffect();
 
 		#endregion
 	}

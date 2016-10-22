@@ -24,7 +24,7 @@ GameObject:
   - 23: {fileID: 23000010804347398}
   - 114: {fileID: 114000011388575422}
   m_Layer: 0
-  m_Name: Field
+  m_Name: ClearField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,6 +99,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000011228184538}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ef8ad0bdd0c64383beb07bb51c088f0, type: 3}
+  m_Script: {fileID: 11500000, guid: e00cd4ec2288942c88acf02df5e734bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
