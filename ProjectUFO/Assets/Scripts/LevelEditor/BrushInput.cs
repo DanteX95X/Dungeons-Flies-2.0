@@ -45,7 +45,7 @@ namespace Assets.Scripts.LevelEditor
 
 		void SaveLevel()
 		{
-			System.IO.File.WriteAllText("default.level", (new LevelInfo(Game.Game.Instance.CurrentLevel)).ToString());
+			System.IO.File.WriteAllText(Game.Game.Instance.LevelPath, (new LevelInfo(Game.Game.Instance.CurrentLevel)).ToString());
 			Debug.Log("Level saved");
 		}
 	}

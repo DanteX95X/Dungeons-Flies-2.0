@@ -24,7 +24,7 @@ namespace Assets.Scripts.States
 			Game.Game.Instance.CurrentLevel.Grid.Clear();
 			Game.Game.Instance.CurrentLevel.Grid = new Dictionary<Vector2, Field>();
 
-			LevelInfo info = new LevelInfo("default.level");
+			LevelInfo info = new LevelInfo(Game.Game.Instance.LevelPath);
 			CreateLevel(info);
 		}
 

@@ -12,6 +12,8 @@ namespace Assets.Scripts.Game
 
 		Level currentLevel = null;
 
+		string levelPath = "default.level";
+
 		#endregion
 		
 		#region properties
@@ -24,12 +26,6 @@ namespace Assets.Scripts.Game
 					instance = new Game();
 				return instance;
 			}
-			/*set
-			{
-				if (instance == null)
-					instance = new Game();
-				instance = value;
-			}*/
 		}
 
 
@@ -37,6 +33,11 @@ namespace Assets.Scripts.Game
 		{
 			get { return currentLevel; }
 			set { currentLevel = value; }
+		}
+
+		public string LevelPath
+		{
+			get { return levelPath; }
 		}
 
 
