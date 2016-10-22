@@ -9,7 +9,7 @@ namespace Assets.Scripts
 {
 	public class PathFinding
 	{
-		public static List<Field> AStar (Field startField, Field goalField)
+		public static List<Field> AStar (Field startField, Field goalField) //Forward heuristic as method argument. We might want to use that in future.
 		{
 			if (startField == goalField)
 			{
@@ -17,12 +17,12 @@ namespace Assets.Scripts
 				return new List<Field> ();
 			}
 
-			#region variables
+			#region variables //Do not use regions inside a method
 
 			Field currentField = startField;
 
 			HashSet<Field> visited = new HashSet<Field> ();
-			HashSet<Field> notVisited = new HashSet<Field> ();
+			HashSet<Field> notVisited = new HashSet<Field> (); //Why would you need that. If field is not in visited then its automatically not visited
 
 			Dictionary<Field, double> costs = new Dictionary<Field, double> ();
 			Dictionary<Field, Field> cameFrom = new Dictionary<Field, Field>();
@@ -34,7 +34,7 @@ namespace Assets.Scripts
 			frontier.Push (currentField, 0);
 			costs [currentField] = 0;
 
-			while (visited.Count != 20)
+			while (visited.Count != 20) //What the fuck is that?
 			{
 				currentField = frontier.Pop();
 				visited.Add (currentField);
@@ -47,7 +47,7 @@ namespace Assets.Scripts
 
 				foreach (Field neighbour in currentField.Neighbours.Values)
 				{
-					if (!visited.Contains(neighbour))
+					if (!visited.Contains(neighbour)) //It will not work. This priority queue is not rebuilding itself when value was substituted
 					{
 						double tentativeCost = costs [currentField] + 1 + CalculateHeuristic (neighbour, goalField);
 						bool tentativeIsBetter = false;
@@ -57,7 +57,7 @@ namespace Assets.Scripts
 							notVisited.Add (neighbour);
 							tentativeIsBetter = true;
 						}
-						else if(tentativeCost < costs[neighbour])
+						else if(tentativeCost < costs[neighbour]) //Neighbour was not visited so how can it have any cost?
 						{
 							tentativeIsBetter = true;
 						}
@@ -85,7 +85,7 @@ namespace Assets.Scripts
 			Field previousField;
 			Field currentField = goalField;
 
-			do {
+			do { //Klamry kurwa!
 				cameFrom.TryGetValue (currentField, out previousField);
 				Debug.Log (previousField.transform.position.x + " " + previousField.transform.position.y);
 				result.Add (previousField);
@@ -103,7 +103,7 @@ namespace Assets.Scripts
 		public static double CalculateHeuristic(Field currentField, Field goalField)
 		{
 			Vector2 differenceVector = goalField.transform.position - currentField.transform.position;
-			double heuristic = differenceVector.magnitude;
+			double heuristic = differenceVector.magnitude; //Nope! Too slow, not neccessary. Manhattan distance is better for this situation.
 			Debug.Log ("Heuristic: " + heuristic);
 			return heuristic;
 		}
