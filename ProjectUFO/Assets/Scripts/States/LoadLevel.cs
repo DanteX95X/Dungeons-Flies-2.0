@@ -50,14 +50,10 @@ namespace Assets.Scripts.States
 				tile.transform.parent = grid.transform;
 				Game.Game.Instance.CurrentLevel.Grid[tile.transform.position] = tile.GetComponent<Field>();
 
-				if (tile.transform.position.x < minCoordinates.x)
-					minCoordinates.x = tile.transform.position.x;
-				if (tile.transform.position.x > maxCoordinates.x)
-					maxCoordinates.x = tile.transform.position.x;
-				if (tile.transform.position.y < minCoordinates.y)
-					minCoordinates.y = tile.transform.position.y;
-				if (tile.transform.position.y > maxCoordinates.y)
-					maxCoordinates.y = tile.transform.position.y;
+				minCoordinates.x = Mathf.Min(minCoordinates.x, tile.transform.position.x);
+				maxCoordinates.x = Mathf.Max(maxCoordinates.x, tile.transform.position.x);
+				minCoordinates.y = Mathf.Min(minCoordinates.y, tile.transform.position.y);
+				maxCoordinates.y = Mathf.Max(maxCoordinates.y, tile.transform.position.y);
 			}
 
 			Debug.Log(maxCoordinates + " " + minCoordinates);
