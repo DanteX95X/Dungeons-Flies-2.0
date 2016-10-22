@@ -14,7 +14,10 @@ namespace Assets.Scripts.LevelEditor
 			Game.Game.Instance.CurrentLevel.Grid[newObject.transform.position] = newObject.GetComponent<Field>();
 
 			if (previousField != null)
+			{
+				newObject.GetComponent<Field>().Units = previousField.Units;
 				Destroy(previousField.gameObject);
+			}
 		}
 	}
 }

@@ -12,6 +12,7 @@ namespace Assets.Scripts.Game
 
 		Dictionary<Vector2, Field> grid;
 		Player player;
+		List<Enemy> enemies;
 
 		#endregion
 
@@ -29,12 +30,23 @@ namespace Assets.Scripts.Game
 			set { player = value; }
 		}
 
+		public List<Enemy> Enemies
+		{
+			get { return enemies; }
+			set { enemies = value; }
+		}
+
+		#region methods
+
 		public Level()
 		{
 			grid = new Dictionary<Vector2, Field>();
 			player = null;
+			enemies = new List<Enemy>();
 		}
 			
+		#endregion
+
 		#endregion
 	}
 }

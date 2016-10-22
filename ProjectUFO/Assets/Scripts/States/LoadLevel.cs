@@ -19,6 +19,9 @@ namespace Assets.Scripts.States
 		[SerializeField]
 		GameObject player = null;
 
+		[SerializeField]
+		GameObject enemy = null;
+
 		public override void Init()
 		{
 			Game.Game.Instance.CurrentLevel.Grid.Clear();
@@ -78,6 +81,15 @@ namespace Assets.Scripts.States
 			GameObject newPlayer = Instantiate(player, level.PlayersPosition, Quaternion.identity) as GameObject;
 			Game.Game.Instance.CurrentLevel.ActivePlayer = newPlayer.GetComponent<Player>();
 			newPlayer.transform.parent = playersParent.transform;
+
+			GameObject enemiesParent = new GameObject();
+			enemiesParent.name = "enemies";
+			foreach (Vector3 position in level.EnemiesPositions)
+			{
+				GameObject newEnemy = Instantiate(enemy, position, Quaternion.identity) as GameObject;
+				Game.Game.Instance.CurrentLevel.Enemies.Add(newEnemy.GetComponent<Enemy>());
+				newEnemy.transform.parent = enemiesParent.transform;
+			}
 
 			SetCamera(new Vector2[] { maxCoordinates, minCoordinates});
 		}

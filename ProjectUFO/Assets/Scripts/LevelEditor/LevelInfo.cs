@@ -5,6 +5,7 @@ using UnityEngine;
 using Assets.Scripts.Utilities;
 using Assets.Scripts.Game;
 using System.IO;
+using Assets.Scripts.Game.Actors;
 
 namespace Assets.Scripts.LevelEditor
 {
@@ -14,7 +15,9 @@ namespace Assets.Scripts.LevelEditor
 
 		List<Pair<Vector3, FieldType>> grid;
 
-		Vector3 playersPosition;
+		Vector3 playersPosition = new Vector3(-100000, -100000);
+
+		List<Vector3> enemiesPositions;
 
 		#endregion
 
@@ -30,6 +33,11 @@ namespace Assets.Scripts.LevelEditor
 			get { return playersPosition; }
 		}
 
+		public List<Vector3> EnemiesPositions
+		{
+			get { return enemiesPositions; }
+		}
+
 		#endregion
 
 		#region methods
@@ -37,13 +45,13 @@ namespace Assets.Scripts.LevelEditor
 		public LevelInfo()
 		{
 			grid = new List<Pair<Vector3, FieldType>>();
-			playersPosition = new Vector3(0, 0);
-			playersPosition += Vector3.zero;
+			enemiesPositions = new List<Vector3>();
 		}
 
 		public LevelInfo(Level level)
 		{
 			grid = new List<Pair<Vector3, FieldType>>();
+			enemiesPositions = new List<Vector3>();
 
 			foreach (Field field in level.Grid.Values)
 			{
@@ -52,11 +60,17 @@ namespace Assets.Scripts.LevelEditor
 
 			if(level.ActivePlayer)
 				playersPosition = level.ActivePlayer.transform.position;
+
+			foreach (Enemy enemy in level.Enemies)
+			{
+				enemiesPositions.Add(enemy.transform.position);
+			}
 		}
 
 		public LevelInfo(string path)
 		{
 			grid = new List<Pair<Vector3, FieldType>>();
+			enemiesPositions = new List<Vector3>();
 
 			using (StreamReader reader = new StreamReader(path))
 			{
@@ -75,6 +89,16 @@ namespace Assets.Scripts.LevelEditor
 				line = reader.ReadLine();
 				words = line.Split();
 				playersPosition = new Vector3(Int32.Parse(words[0]), Int32.Parse(words[1]), Int32.Parse(words[2]));
+
+				line = reader.ReadLine();
+				int enemiesCount = Int32.Parse(line);
+
+				for (int i = 0; i < enemiesCount; ++i)
+				{
+					line = reader.ReadLine();
+					words = line.Split();
+					enemiesPositions.Add(new Vector3(Int32.Parse(words[0]), Int32.Parse(words[1]), Int32.Parse(words[2])));
+				}
 			}
 		}
 
@@ -88,7 +112,12 @@ namespace Assets.Scripts.LevelEditor
 				levelInfo += field.first.x + " " + field.first.y + " " + field.first.z + " " + (int)field.second + "\n";
 			}
 
-			levelInfo += playersPosition.x + " " + playersPosition.y + " " + playersPosition.z + "\n\n";
+			levelInfo += playersPosition.x + " " + playersPosition.y + " " + playersPosition.z + "\n";
+			levelInfo += enemiesPositions.Count + "\n";
+			foreach (Vector3 position in enemiesPositions)
+			{
+				levelInfo += position.x + " " + position.y + " " + position.z + "\n";
+			}
 
 			return levelInfo;
 		}
