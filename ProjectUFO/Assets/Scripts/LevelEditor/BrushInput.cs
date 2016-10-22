@@ -15,6 +15,7 @@ namespace Assets.Scripts.LevelEditor
 		{
 			brushes = new List<Brush>(GetComponents<Brush>());
 			currentBrushIndex = 0;
+			brushes[currentBrushIndex].SpawnBrushIndicator();
 		}
 
 		void Update()

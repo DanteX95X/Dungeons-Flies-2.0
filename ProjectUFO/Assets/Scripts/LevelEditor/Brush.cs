@@ -26,7 +26,7 @@ namespace Assets.Scripts.LevelEditor
 		void Start()
 		{
 			currentColorIndex = 0;
-			SpawnBrushIndicator();
+			//SpawnBrushIndicator();
 		}
 
 		void PreviousColor()

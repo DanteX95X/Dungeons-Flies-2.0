@@ -43,7 +43,7 @@ namespace Assets.Scripts.Game.Actors
 			else
 			{
 				Debug.Log("Could not find proper starting field");
-				Destroy(gameObject);
+				Destroy(this);
 			}
 
 			destination = (Vector2)transform.position;
