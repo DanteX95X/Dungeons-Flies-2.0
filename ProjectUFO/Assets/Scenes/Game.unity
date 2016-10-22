@@ -182,6 +182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   field: {fileID: 1000011228184538, guid: dd7e3681fc8ea403fb0199383d9da30f, type: 2}
   player: {fileID: 1000012598920258, guid: 5aff87cc3de244b15bbdf2c320f49e9e, type: 2}
+  enemy: {fileID: 1000012355221622, guid: 24cb9fe5a2342440f85facce24d5ff62, type: 2}
 --- !u!4 &423709440
 Transform:
   m_ObjectHideFlags: 0
