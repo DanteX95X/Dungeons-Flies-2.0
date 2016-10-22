@@ -24,7 +24,7 @@ namespace Assets.Scripts.Game.Actors
 
 			path = new List<Vector2>();
 
-			path.Add(Level.Grid[transform.position].transform.position);
+			path.Add(Game.Instance.CurrentLevel.Grid[transform.position].transform.position);
 			++pathSegmentsPassed;
 
 		}

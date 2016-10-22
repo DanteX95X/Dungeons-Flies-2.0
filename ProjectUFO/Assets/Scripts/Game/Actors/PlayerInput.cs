@@ -37,7 +37,7 @@ namespace Assets.Scripts.Game.Actors
 				Vector2 destination = HandleInput(); 
 				Field dummy = null;
 
-				if (destination != (Vector2)transform.position && Level.Grid.TryGetValue(destination, out dummy))
+				if (destination != (Vector2)transform.position && Game.Instance.CurrentLevel.Grid.TryGetValue(destination, out dummy))
 				{
 					playerController.Move(destination);
 					foreach (Actor actor in FindObjectsOfType<Actor>())

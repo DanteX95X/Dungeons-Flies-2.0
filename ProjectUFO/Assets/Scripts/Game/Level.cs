@@ -8,16 +8,23 @@ namespace Assets.Scripts.Game
 	{
 		#region variables
 
-		static Dictionary<Vector2, Field> grid = new Dictionary<Vector2, Field>();
+		Dictionary<Vector2, Field> grid = new Dictionary<Vector2, Field>();
+		Vector3 playerInitialPosition = new Vector3(3, 3, 0);
 
 		#endregion
 
 		#region properties
 
-		public static Dictionary<Vector2, Field> Grid
+		public Dictionary<Vector2, Field> Grid
 		{
 			get { return grid; }
 			set { grid = value; }
+		}
+
+		public Vector2 PlayerInitialPosition
+		{
+			get { return playerInitialPosition; }
+			set { playerInitialPosition = value; }
 		}
 
 		#endregion
