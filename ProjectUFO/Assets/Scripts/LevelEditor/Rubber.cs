@@ -12,9 +12,12 @@ namespace Assets.Scripts.LevelEditor
 
 			Game.Game.Instance.CurrentLevel.Grid.TryGetValue(newObject.transform.position, out field);
 
-			Destroy(newObject);
 			if (field != null)
+			{
 				Destroy(field.gameObject);
+				Game.Game.Instance.CurrentLevel.Grid.Remove(newObject.transform.position);
+			}
+			Destroy(newObject);
 		}
 	}
 }

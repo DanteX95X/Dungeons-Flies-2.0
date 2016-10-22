@@ -4,6 +4,7 @@ using Assets.Scripts.Game.Map;
 using UnityEngine;
 using Assets.Scripts.Utilities;
 using Assets.Scripts.Game;
+using System.IO;
 
 namespace Assets.Scripts.LevelEditor
 {
@@ -14,6 +15,20 @@ namespace Assets.Scripts.LevelEditor
 		List<Pair<Vector3, FieldType>> grid;
 
 		Vector3 playersPosition;
+
+		#endregion
+
+		#region properties
+
+		public List<Pair<Vector3, FieldType>> Grid
+		{
+			get { return grid; }
+		}
+
+		public Vector3 PlayersPosition
+		{
+			get { return playersPosition; }
+		}
 
 		#endregion
 
@@ -39,6 +54,30 @@ namespace Assets.Scripts.LevelEditor
 				playersPosition = level.ActivePlayer.transform.position;
 		}
 
+		public LevelInfo(string path)
+		{
+			grid = new List<Pair<Vector3, FieldType>>();
+
+			using (StreamReader reader = new StreamReader(path))
+			{
+				string line = reader.ReadLine();
+				int fieldsCount = Int32.Parse(line);
+				string[] words;
+
+				for (int i = 0; i < fieldsCount; ++i)
+				{
+					line = reader.ReadLine();
+					words = line.Split();
+					grid.Add(new Pair<Vector3, FieldType>(new Vector3(Int32.Parse(words[0]), Int32.Parse(words[1]), Int32.Parse(words[2])), (FieldType)Int32.Parse(words[3])));
+
+				}
+
+				line = reader.ReadLine();
+				words = line.Split();
+				playersPosition = new Vector3(Int32.Parse(words[0]), Int32.Parse(words[1]), Int32.Parse(words[2]));
+			}
+		}
+
 		public override string ToString()
 		{
 			string levelInfo = "";
@@ -46,9 +85,8 @@ namespace Assets.Scripts.LevelEditor
 			levelInfo += grid.Count + "\n";
 			foreach (var field in grid)
 			{
-				levelInfo += field.first.x + " " + field.first.y + " " + field.first.z + " " + field.second.ToString() + "\n";
+				levelInfo += field.first.x + " " + field.first.y + " " + field.first.z + " " + (int)field.second + "\n";
 			}
-			levelInfo += "\n";
 
 			levelInfo += playersPosition.x + " " + playersPosition.y + " " + playersPosition.z + "\n\n";
 

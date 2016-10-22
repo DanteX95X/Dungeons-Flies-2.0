@@ -9,7 +9,7 @@ namespace Assets.Scripts.Game.Actors
 	{
 		#region variables
 
-		static List<Vector2> displacements = new List<Vector2> { new Vector2(-1,0), new Vector2(1,0), new Vector2(0,-1), new Vector2(0,1)}; 
+		static List<Vector2> displacements = new List<Vector2> { new Vector2(-1,0), new Vector2(1,0), new Vector2(0,-1), new Vector2(0,1)};
 
 		Player playerController = null;
 		Movable movementController = null;
@@ -64,7 +64,8 @@ namespace Assets.Scripts.Game.Actors
 				foreach (Actor actor in FindObjectsOfType<Actor>())
 					actor.RewindTime();
 
-				Instantiate(playerPrefab, transform.position, Quaternion.identity);
+				GameObject newPlayer = Instantiate(playerPrefab, transform.position, Quaternion.identity) as GameObject;
+				newPlayer.transform.parent = transform.parent;
 				destination = transform.position;
 
 				GetComponent<Renderer>().material = ghostMaterial;

@@ -3,6 +3,8 @@ using System.Collections;
 using Assets.Scripts.Game;
 using Assets.Scripts.Game.Map;
 using System.Collections.Generic;
+using Assets.Scripts.LevelEditor;
+using Assets.Scripts.Game.Actors;
 
 namespace Assets.Scripts.States
 {
@@ -19,21 +21,28 @@ namespace Assets.Scripts.States
 
 		public override void Init()
 		{
-			rows = 5;
-			columns = 5;
-
 			Game.Game.Instance.CurrentLevel.Grid.Clear();
 			Game.Game.Instance.CurrentLevel.Grid = new Dictionary<Vector2, Field>();
-			GameObject grid = new GameObject("Grid");
 
-			for (int i = rows - 1; i >= 0; --i)
+			LevelInfo info = new LevelInfo("default.level");
+			CreateLevel(info);
+		}
+
+		public override void UpdateLoop()
+		{
+			ChangeState<DummyState>();
+		}
+
+		void CreateLevel(LevelInfo level)
+		{
+			GameObject grid = new GameObject();
+			grid.name = "grid";
+
+			foreach (var fieldInfo in level.Grid)
 			{
-				for (int j = 0; j < columns; ++j)
-				{
-					GameObject currentField = Instantiate(field, new Vector3(i, j, 1), Quaternion.identity) as GameObject;
-					currentField.transform.parent = grid.transform;
-					Game.Game.Instance.CurrentLevel.Grid[currentField.transform.position] = currentField.GetComponent<Field>();
-				}
+				GameObject tile = Instantiate(field, fieldInfo.first, Quaternion.identity) as GameObject;
+				tile.transform.parent = grid.transform;
+				Game.Game.Instance.CurrentLevel.Grid[tile.transform.position] = tile.GetComponent<Field>();
 			}
 
 			foreach (Field field in Game.Game.Instance.CurrentLevel.Grid.Values)
@@ -50,12 +59,11 @@ namespace Assets.Scripts.States
 
 			}
 
-			Instantiate(player, new Vector3(0,0,0), Quaternion.identity);
-		}
-
-		public override void UpdateLoop()
-		{
-			ChangeState<DummyState>();
+			GameObject playersParent = new GameObject();
+			playersParent.name = "players";
+			GameObject newPlayer = Instantiate(player, level.PlayersPosition, Quaternion.identity) as GameObject;
+			Game.Game.Instance.CurrentLevel.ActivePlayer = newPlayer.GetComponent<Player>();
+			newPlayer.transform.parent = playersParent.transform;
 		}
 	}
 }

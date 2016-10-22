@@ -32,6 +32,8 @@ namespace Assets.Scripts.LevelEditor
 				brushes[currentBrushIndex].Paint();
 			else if (Input.GetKeyDown(KeyCode.Tab))
 				NextBrush();
+			else if (Input.GetKeyDown(KeyCode.Return))
+				SaveLevel();
 		}
 
 		void NextBrush()
@@ -39,6 +41,12 @@ namespace Assets.Scripts.LevelEditor
 			brushes[currentBrushIndex].DestroyIndicator();
 			currentBrushIndex = (currentBrushIndex + 1) % brushes.Count;
 			brushes[currentBrushIndex].SpawnBrushIndicator();
+		}
+
+		void SaveLevel()
+		{
+			System.IO.File.WriteAllText("default.level", (new LevelInfo(Game.Game.Instance.CurrentLevel)).ToString());
+			Debug.Log("Level saved");
 		}
 	}
 }
