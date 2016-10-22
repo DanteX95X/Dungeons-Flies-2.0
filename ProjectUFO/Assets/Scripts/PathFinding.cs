@@ -7,29 +7,31 @@ namespace Assets.Scripts
 {
 	public class PathFinding
 	{
-		public static void AStar (Vector2 startPosition, Vector2 goalPosition)
+		public static List<Field> AStar (Field startField, Field goalField)
 		{
-			if (startPosition == goalPosition)
+			if (startField == goalField)
 			{
 				Debug.Log ("Could not calculate path between the same fields!");
-				return;
+				return new List<Field> ();
 			}
 
-			Field currentField = Level.Grid [startPosition];
-			Field goalField = Level.Grid [goalPosition];
+			//#region variables
+
+			Field currentField = startField;
+		//	Field goalField = Level.Grid [goalPosition];
 
 			HashSet<Field> visited = new HashSet<Field> ();
 			HashSet<Field> notVisited = new HashSet<Field> ();
 
 			Dictionary<Field, double> costs = new Dictionary<Field, double> ();
-			Dictionary<Field, double> heuristics = new Dictionary<Field, double> ();
 			Dictionary<Field, Field> cameFrom = new Dictionary<Field, Field>();
 
 			PriorityQueue<Field> frontier = new PriorityQueue<Field> ();
 
+			//#endregion
+
 			frontier.Push (currentField, 0);
 			costs [currentField] = 0;
-
 
 			while (visited.Count != Level.Grid.Count)
 			{
@@ -38,24 +40,22 @@ namespace Assets.Scripts
 
 				if (currentField == goalField)
 				{
-					//reconstruct Path
 					Debug.Log ("goalField reached!");
 					Debug.Log ("Position: " + currentField.transform.position.x + " " + currentField.transform.position.y);
-					GetPath (cameFrom, goalField, Level.Grid [startPosition]);
-					break;
+					return GetPath(cameFrom, goalField, startField);
+
 				}
 
 				foreach (Field neighbour in currentField.Neighbours.Values)
 				{
 					if (!visited.Contains(neighbour))
 					{
-						double tentativeCost = costs [currentField] + 1;
+						double tentativeCost = costs [currentField] + 1 + CalculateHeuristic (neighbour, goalField);
 						bool tentativeIsBetter = false;
 
 						if (! notVisited.Contains (neighbour))
 						{
 							notVisited.Add (neighbour);
-							heuristics [neighbour] = CalculateHeuristic (neighbour, goalField);
 							tentativeIsBetter = true;
 						}
 						else if(tentativeCost < costs[neighbour])
@@ -70,11 +70,13 @@ namespace Assets.Scripts
 							frontier.Push (neighbour, costs[neighbour]);
 						}
 
-						Debug.Log ("Sasiad: " + neighbour.transform.position.x + " " + neighbour.transform.position.y);
+						//Debug.Log ("Sasiad: " + neighbour.transform.position.x + " " + neighbour.transform.position.y);
 					}
 				}
 
 			}
+
+			return new List<Field>();
 
 		}
 
