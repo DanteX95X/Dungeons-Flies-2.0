@@ -35,7 +35,24 @@ namespace Assets.Scripts.LevelEditor
 				grid.Add(new Pair<Vector3, FieldType>(field.transform.position, field.Type));
 			}
 
-			playersPosition = level.ActivePlayer.transform.position;
+			if(level.ActivePlayer)
+				playersPosition = level.ActivePlayer.transform.position;
+		}
+
+		public override string ToString()
+		{
+			string levelInfo = "";
+
+			levelInfo += grid.Count + "\n";
+			foreach (var field in grid)
+			{
+				levelInfo += field.first.x + " " + field.first.y + " " + field.first.z + " " + field.second.ToString() + "\n";
+			}
+			levelInfo += "\n";
+
+			levelInfo += playersPosition.x + " " + playersPosition.y + " " + playersPosition.z + "\n\n";
+
+			return levelInfo;
 		}
 
 		#endregion
