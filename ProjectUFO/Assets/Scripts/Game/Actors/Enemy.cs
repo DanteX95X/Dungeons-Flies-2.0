@@ -4,6 +4,8 @@ namespace Assets.Scripts.Game.Actors
 {
 	public class Enemy : Actor
 	{
+		#region methods
+
 		public override void ExecuteNextMove()
 		{
 			throw new NotImplementedException();
@@ -13,6 +15,8 @@ namespace Assets.Scripts.Game.Actors
 		{
 			throw new NotImplementedException();
 		}
+
+		#endregion
 
 	}
 }

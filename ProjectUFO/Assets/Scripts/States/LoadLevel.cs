@@ -11,7 +11,7 @@ namespace Assets.Scripts.States
 	
 	public class LoadLevel : State
 	{
-		int rows, columns;
+		#region variables
 
 		[SerializeField]
 		GameObject field = null;
@@ -21,6 +21,10 @@ namespace Assets.Scripts.States
 
 		[SerializeField]
 		GameObject enemy = null;
+
+		#endregion
+
+		#region methods
 
 		public override void Init()
 		{
@@ -110,5 +114,8 @@ namespace Assets.Scripts.States
 			size += 1;
 			mainCamera.orthographicSize = size;
 		}
+
+
+		#endregion
 	}
 }

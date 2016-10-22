@@ -6,10 +6,16 @@ namespace Assets.Scripts.LevelEditor
 {
 	public class BrushInput : MonoBehaviour
 	{
+		#region variables
+
 		static List<Vector3> displacements = new List<Vector3> { new Vector3(-1,0), new Vector3(1,0), new Vector3(0,-1), new Vector3(0,1) };
 
 		List<Brush> brushes;
 		int currentBrushIndex = 0;
+
+		#endregion
+
+		#region methods
 
 		void Start()
 		{
@@ -48,6 +54,8 @@ namespace Assets.Scripts.LevelEditor
 			System.IO.File.WriteAllText(Game.Game.Instance.LevelPath, (new LevelInfo(Game.Game.Instance.CurrentLevel)).ToString());
 			Debug.Log("Level saved");
 		}
+
+		#endregion
 	}
 }
 
