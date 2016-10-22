@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Assets.Scripts.LevelEditor
 {
-	public class Brush : MonoBehaviour
+	public abstract class Brush : MonoBehaviour
 	{
 		#region variables
 
@@ -29,30 +29,39 @@ namespace Assets.Scripts.LevelEditor
 			SpawnBrushIndicator();
 		}
 
-		void PreviousField()
+		void PreviousColor()
 		{
 			currentColorIndex = (currentColorIndex - 1) % colors.Count;
 			SpawnBrushIndicator();
 		}
 
-		void NextField()
+		void NextColor()
 		{
 			currentColorIndex = (currentColorIndex + 1) % colors.Count;
 			SpawnBrushIndicator();
 		}
 			
-		protected void SpawnBrushIndicator()
+		public void SpawnBrushIndicator()
 		{
 			if (indicator != null)
 				Destroy(indicator);
-			indicator = Instantiate(colors[currentColorIndex], new Vector3(transform.position.x, transform.position.y, depth), Quaternion.identity) as GameObject;
+			indicator = Instantiate(colors[currentColorIndex], new Vector3(transform.position.x, transform.position.y, -5), Quaternion.identity) as GameObject;
 			indicator.transform.parent = transform;
+		}
+
+		public void DestroyIndicator()
+		{
+			if (indicator != null)
+				Destroy(indicator);
 		}
 
 		public void Paint()
 		{
-			Instantiate(colors[currentColorIndex], indicator.transform.position, Quaternion.identity);
+			GameObject paint = Instantiate(colors[currentColorIndex], new Vector3(indicator.transform.position.x, indicator.transform.position.y, depth), Quaternion.identity) as GameObject;
+			UpdateLevel(paint);
 		}
+
+		protected abstract void UpdateLevel(GameObject newObject);
 
 		#endregion
 

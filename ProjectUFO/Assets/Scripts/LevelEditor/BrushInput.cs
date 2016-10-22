@@ -29,6 +29,15 @@ namespace Assets.Scripts.LevelEditor
 				transform.position += displacements[3];
 			else if (Input.GetKeyDown(KeyCode.Space))
 				brushes[currentBrushIndex].Paint();
+			else if (Input.GetKeyDown(KeyCode.Tab))
+				NextBrush();
+		}
+
+		void NextBrush()
+		{
+			brushes[currentBrushIndex].DestroyIndicator();
+			currentBrushIndex = (currentBrushIndex + 1) % brushes.Count;
+			brushes[currentBrushIndex].SpawnBrushIndicator();
 		}
 	}
 }
