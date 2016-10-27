@@ -23,14 +23,14 @@ namespace Assets.Scripts.Utilities
 			HashSet<Field> visited = new HashSet<Field> ();
 			HashSet<Field> opened = new HashSet<Field> (); 
 
-			Dictionary<Field, double> gScores = new Dictionary<Field, double> ();
+			Dictionary<Field, double> costsFromStart = new Dictionary<Field, double> ();
 			Dictionary<Field, Field> cameFrom = new Dictionary<Field, Field>();
 
 			PriorityQueue<Field> frontier = new PriorityQueue<Field> ();
 			frontier.Push (currentField, CalculateHeuristic(currentField, goalField));
 			opened.Add (currentField);
 
-			gScores [currentField] = 0;
+			costsFromStart [currentField] = 0;
 
 			while (frontier.Count > 1)
 			{
@@ -58,12 +58,12 @@ namespace Assets.Scripts.Utilities
 
 					if (!visited.Contains(neighbour))
 					{
-						double tentativeGScore = gScores[currentField] + 1;
+						double temporaryCostFromStart = costsFromStart[currentField] + 1;
 
 						if (! opened.Contains(neighbour))
 						{
-							gScores [neighbour] = tentativeGScore;
-							double tentativeCost = gScores[neighbour] + CalculateHeuristic (neighbour, goalField);
+							costsFromStart [neighbour] = temporaryCostFromStart;
+							double tentativeCost = costsFromStart[neighbour] + CalculateHeuristic (neighbour, goalField);
 							opened.Add (neighbour);
 
 							frontier.Push (neighbour, tentativeCost);
@@ -71,10 +71,10 @@ namespace Assets.Scripts.Utilities
 							cameFrom [neighbour] = currentField;
 		
 						}
-						else if(tentativeGScore < gScores[neighbour])
+						else if(temporaryCostFromStart < costsFromStart[neighbour])
 						{
-							gScores [neighbour] = tentativeGScore;
-							double tentativeCost = gScores[neighbour] + CalculateHeuristic (neighbour, goalField);
+							costsFromStart [neighbour] = temporaryCostFromStart;
+							double tentativeCost = costsFromStart[neighbour] + CalculateHeuristic (neighbour, goalField);
 							frontier.Push (neighbour, tentativeCost);
 
 							cameFrom [neighbour] = currentField;
