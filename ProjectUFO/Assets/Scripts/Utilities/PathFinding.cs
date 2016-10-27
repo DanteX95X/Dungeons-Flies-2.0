@@ -8,7 +8,9 @@ namespace Assets.Scripts.Utilities
 {
 	public class PathFinding
 	{
-		public static List<Field> AStar (Field startField, Field goalField) //Forward heuristic as method argument. We might want to use that in future.
+		public delegate int Heuristic(Field currentField, Field goalField);
+
+		public static List<Field> AStar (Field startField, Field goalField, Heuristic heuristic)
 		{
 			if (startField == goalField)
 			{
@@ -27,9 +29,9 @@ namespace Assets.Scripts.Utilities
 			Dictionary<Field, Field> cameFrom = new Dictionary<Field, Field>();
 
 			PriorityQueue<Field> frontier = new PriorityQueue<Field> ();
-			frontier.Push (currentField, CalculateHeuristic(currentField, goalField));
-			opened.Add (currentField);
 
+			frontier.Push (currentField, heuristic(currentField, goalField));
+			opened.Add (currentField);
 			costsFromStart [currentField] = 0;
 
 			while (frontier.Count > 1)
@@ -60,28 +62,22 @@ namespace Assets.Scripts.Utilities
 					{
 						double temporaryCostFromStart = costsFromStart[currentField] + 1;
 
-						if (! opened.Contains(neighbour))
+						if ((! opened.Contains (neighbour)) || (temporaryCostFromStart < costsFromStart [neighbour]))
 						{
+							if (! opened.Contains (neighbour))
+							{
+								opened.Add (neighbour);
+							}
+
 							costsFromStart [neighbour] = temporaryCostFromStart;
-							double tentativeCost = costsFromStart[neighbour] + CalculateHeuristic (neighbour, goalField);
-							opened.Add (neighbour);
-
+							double tentativeCost = costsFromStart [neighbour] + heuristic (neighbour, goalField);
 							frontier.Push (neighbour, tentativeCost);
-
-							cameFrom [neighbour] = currentField;
-		
-						}
-						else if(temporaryCostFromStart < costsFromStart[neighbour])
-						{
-							costsFromStart [neighbour] = temporaryCostFromStart;
-							double tentativeCost = costsFromStart[neighbour] + CalculateHeuristic (neighbour, goalField);
-							frontier.Push (neighbour, tentativeCost);
-
 							cameFrom [neighbour] = currentField;
 						}
 					}
 				}
 			}
+
 			Debug.Log ("Goal field is unreachable!");
 			return new List<Field>();
 		}
@@ -106,7 +102,7 @@ namespace Assets.Scripts.Utilities
 			return result;
 		}
 
-		public static int CalculateHeuristic(Field currentField, Field goalField)
+		public static int ManhattanHeuristic(Field currentField, Field goalField)
 		{
 			Vector2 differenceVector = goalField.transform.position - currentField.transform.position;
 			int heuristic = Math.Abs ((int)differenceVector.x) + Math.Abs ((int)differenceVector.y);
