@@ -25,7 +25,7 @@ namespace Assets.Scripts.Utilities
 			HashSet<Field> visited = new HashSet<Field> ();
 			HashSet<Field> opened = new HashSet<Field> (); 
 
-			Dictionary<Field, double> costsFromStart = new Dictionary<Field, double> ();
+			Dictionary<Field, int> costsFromStart = new Dictionary<Field, int> ();
 			Dictionary<Field, Field> cameFrom = new Dictionary<Field, Field>();
 
 			PriorityQueue<Field> frontier = new PriorityQueue<Field> ();
@@ -60,7 +60,7 @@ namespace Assets.Scripts.Utilities
 
 					if (!visited.Contains(neighbour))
 					{
-						double temporaryCostFromStart = costsFromStart[currentField] + 1;
+						int temporaryCostFromStart = costsFromStart[currentField] + 1;
 
 						if ((! opened.Contains (neighbour)) || (temporaryCostFromStart < costsFromStart [neighbour]))
 						{
@@ -70,7 +70,7 @@ namespace Assets.Scripts.Utilities
 							}
 
 							costsFromStart [neighbour] = temporaryCostFromStart;
-							double tentativeCost = costsFromStart [neighbour] + heuristic (neighbour, goalField);
+							int tentativeCost = costsFromStart [neighbour] + heuristic (neighbour, goalField);
 							frontier.Push (neighbour, tentativeCost);
 							cameFrom [neighbour] = currentField;
 						}
