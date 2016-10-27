@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using Assets.Scripts.LevelEditor;
 using Assets.Scripts.Game.Actors;
 
+using Assets.Scripts.Utilities;
+
 namespace Assets.Scripts.States
 {
 	
@@ -33,6 +35,20 @@ namespace Assets.Scripts.States
 
 			LevelInfo info = new LevelInfo(Game.Game.Instance.LevelPath);
 			CreateLevel(info);
+
+		//	test code for pathfinding
+			Field startTest = Game.Game.Instance.CurrentLevel.Grid[new Vector2(4,-1)];
+			Field endTest = Game.Game.Instance.CurrentLevel.Grid[new Vector2(2,3)];
+
+			List<Field> path = PathFinding.AStar (startTest, endTest);
+
+			for (int i = 0; i < path.Count; ++i)
+			{
+				Debug.Log (path[i].transform.position.x + " " + path[i].transform.position.y);
+			}
+			Debug.Log ("Distance = " + (path.Count - 1));
+
+		//	end of test code for pathfinding
 		}
 
 		public override void UpdateLoop()
