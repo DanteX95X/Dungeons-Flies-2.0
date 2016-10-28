@@ -11,6 +11,8 @@ namespace Assets.Scripts.Game.Actors
 		Vector2 destination;
 		Vector2 movementAxis;
 
+		Quaternion rotation;
+
 		bool isMoving = false;
 
 		[SerializeField]
@@ -18,6 +20,12 @@ namespace Assets.Scripts.Game.Actors
 
 		[SerializeField]
 		static float proximityThreshold = 0.1f;
+
+		[SerializeField]
+		static float rotationSpeed = 300;
+
+		[SerializeField]
+		static float rotationProximityTreshold = 5;
 
 		#endregion
 
@@ -47,6 +55,7 @@ namespace Assets.Scripts.Game.Actors
 			}
 
 			destination = (Vector2)transform.position;
+			rotation = (Quaternion)transform.rotation;
 		}
 
 		void Update()
@@ -64,6 +73,19 @@ namespace Assets.Scripts.Game.Actors
 					transform.position += (Vector3)movementAxis * speed * Time.deltaTime;
 				}
 			}
+
+			if (rotation != transform.rotation)
+			{
+				if(Mathf.Abs(rotation.eulerAngles.z - transform.rotation.eulerAngles.z) < rotationProximityTreshold)
+				{
+					transform.rotation = rotation;
+				}
+				else
+				{
+					float step = rotationSpeed * Time.deltaTime;
+					transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, step);
+				}
+			}
 		}
 
 		public void StartMovement(Vector2 destination)
@@ -76,6 +98,15 @@ namespace Assets.Scripts.Game.Actors
 			Game.Instance.CurrentLevel.Grid[transform.position].Units.Remove(gameObject);
 			this.destination = destination;
 			movementAxis = (destination - (Vector2)transform.position).normalized;
+
+			if (movementAxis.x == 1)
+				rotation = Quaternion.Euler(0,0,0);
+			if (movementAxis.x == -1)
+				rotation = Quaternion.Euler(0,0,180);
+			if (movementAxis.y == 1)
+				rotation = Quaternion.Euler(0,0,90);
+			if (movementAxis.y == -1)
+				rotation = Quaternion.Euler(0,0,270);
 		}
 
 		public void MoveToDestination(Vector2 destination)
