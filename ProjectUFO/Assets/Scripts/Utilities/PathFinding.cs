@@ -99,6 +99,7 @@ namespace Assets.Scripts.Utilities
 				if(CalculateCost(previousField, currentField) >= IMPASSABILITY_THRESHOLD)
 				{
 					result.Clear();
+					Debug.Log("Impassable");
 					return result;
 				}
 
@@ -109,6 +110,15 @@ namespace Assets.Scripts.Utilities
 			while(currentField != startField);
 
 			result.Reverse ();
+
+			/*for (int i = 0; i < result.Count - 1; ++i)
+			{
+				if (CalculateCost(result[i], result[i + 1]) >= IMPASSABILITY_THRESHOLD)
+				{
+					result.Clear();
+				}
+			}*/
+
 			return result;
 		}
 
@@ -132,7 +142,14 @@ namespace Assets.Scripts.Utilities
 				return IMPASSABILITY_THRESHOLD;
 			}
 
-			return 1;
+			int cost = 1;
+			foreach (Field neighbour in next.Neighbours.Values)
+			{
+				if (neighbour.ContainsUnitOfType<Player>())
+					cost += 100;
+			}
+				
+			return cost;
 		}
 	}
 }

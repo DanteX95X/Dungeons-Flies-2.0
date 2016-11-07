@@ -33,9 +33,10 @@ namespace Assets.Scripts.Game.Actors
 
 		public override void ExecuteNextMove()
 		{
-			List<Field> path = Utilities.PathFinding.AStar(Game.Instance.CurrentLevel.Grid[transform.position], Game.Instance.CurrentLevel.Grid[targetPosition], Utilities.PathFinding.ManhattanHeuristic);
+			List<Field> path = Utilities.PathFinding.AStar(Game.Instance.CurrentLevel.Grid[transform.position], Game.Instance.CurrentLevel.Grid[targetPosition], Utilities.PathFinding.EmptyHeuristic);
 			if (path.Count > 1)
 			{
+				Debug.Log(path[1].transform.position);
 				movementController.StartMovement(path[1].transform.position);
 			}
 		}
