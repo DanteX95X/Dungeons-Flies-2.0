@@ -14,7 +14,7 @@ namespace Assets.Scripts.Utilities
 		{
 			if (startField == goalField)
 			{
-				Debug.Log ("Could not calculate path between the same fields!");
+				//Debug.Log ("Could not calculate path between the same fields!");
 				List<Field> result = new List<Field>();
 				result.Add (startField);
 				return result;
@@ -51,7 +51,7 @@ namespace Assets.Scripts.Utilities
 
 				if (currentField == goalField)
 				{
-					Debug.Log ("goalField reached!");
+					//Debug.Log ("goalField reached!"); Nobody cares!
 					return GetPath(cameFrom, goalField, startField);
 				}
 
