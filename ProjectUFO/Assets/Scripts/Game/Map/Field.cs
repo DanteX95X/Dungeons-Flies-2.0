@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Game.Actors;
 
 namespace Assets.Scripts.Game.Map
 {
@@ -10,6 +11,7 @@ namespace Assets.Scripts.Game.Map
 		#region variables
 
 		Dictionary<Vector2, Field> neighbours = new Dictionary<Vector2, Field>();
+		[SerializeField]
 		List<GameObject> units = new List<GameObject>();
 
 		protected FieldType type;
@@ -50,6 +52,18 @@ namespace Assets.Scripts.Game.Map
 		}
 
 		protected abstract void ApplyEffect();
+
+		public bool ContainsUnitOfType<T>()
+		{
+			foreach (GameObject actor in units)
+			{
+				if (actor.GetComponent<T>() != null)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
 
 		#endregion
 	}
