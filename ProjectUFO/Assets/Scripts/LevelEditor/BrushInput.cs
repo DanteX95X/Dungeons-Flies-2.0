@@ -44,9 +44,21 @@ namespace Assets.Scripts.LevelEditor
 
 		void NextBrush()
 		{
-			brushes[currentBrushIndex].DestroyIndicator();
-			currentBrushIndex = (currentBrushIndex + 1) % brushes.Count;
-			brushes[currentBrushIndex].SpawnBrushIndicator();
+
+			if (brushes [currentBrushIndex].CurrentColorIndex == brushes [currentBrushIndex].ColorsCount - 1)
+			{	
+				brushes[currentBrushIndex].CurrentColorIndex = 0;
+				brushes[currentBrushIndex].DestroyIndicator();
+				currentBrushIndex = (currentBrushIndex + 1) % brushes.Count;
+				brushes[currentBrushIndex].SpawnBrushIndicator();
+			} 
+			else
+			{
+				brushes[currentBrushIndex].DestroyIndicator();
+				brushes [currentBrushIndex].NextColor ();
+			}
+
+
 		}
 
 		void SaveLevel()

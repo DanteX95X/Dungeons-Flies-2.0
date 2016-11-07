@@ -20,6 +20,16 @@ namespace Assets.Scripts.LevelEditor
 
 		#endregion
 
+		public int CurrentColorIndex
+		{
+			get { return currentColorIndex; }
+			set { currentColorIndex = value;}
+		}
+
+		public int ColorsCount
+		{
+			get {return colors.Count;}
+		}
 
 		#region methods
 
@@ -35,8 +45,9 @@ namespace Assets.Scripts.LevelEditor
 			SpawnBrushIndicator();
 		}
 
-		void NextColor()
+		public void NextColor()
 		{
+			Debug.Log (currentColorIndex);
 			currentColorIndex = (currentColorIndex + 1) % colors.Count;
 			SpawnBrushIndicator();
 		}
@@ -45,6 +56,7 @@ namespace Assets.Scripts.LevelEditor
 		{
 			if (indicator != null)
 				Destroy(indicator);
+
 			indicator = Instantiate(colors[currentColorIndex], new Vector3(transform.position.x, transform.position.y, -5), Quaternion.identity) as GameObject;
 			indicator.transform.parent = transform;
 		}

@@ -18,7 +18,5 @@ namespace Assets.Scripts.Utilities
 			this.first = first;
 			this.second = second;
 		}
-
 	}
 }
-

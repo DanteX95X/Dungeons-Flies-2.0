@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Game.Map
 {
-	public class ClearField : Field
+	public class FreezeField : Field
 	{
 		protected override void ApplyEffect()
 		{
@@ -12,8 +12,8 @@ namespace Assets.Scripts.Game.Map
 
 		void Start()
 		{
-			type = FieldType.CLEAR;
-			Debug.Log ("Clear field spawned!");
+			type = FieldType.FREEZE;
+			Debug.Log ("Freeze field spawned!");
 		}
 	}
 }
