@@ -16,12 +16,6 @@ namespace Assets.Scripts.States
 		[SerializeField]
 		GameObject[] fields = null;
 
-		//[SerializeField]
-		//GameObject clearField = null;
-
-		//[SerializeField]
-		//GameObject freezeField = null;
-
 		[SerializeField]
 		GameObject player = null;
 

@@ -20,17 +20,6 @@ namespace Assets.Scripts.LevelEditor
 
 		#endregion
 
-		public int CurrentColorIndex
-		{
-			get { return currentColorIndex; }
-			set { currentColorIndex = value;}
-		}
-
-		public int ColorsCount
-		{
-			get {return colors.Count;}
-		}
-
 		#region methods
 
 		void Start()

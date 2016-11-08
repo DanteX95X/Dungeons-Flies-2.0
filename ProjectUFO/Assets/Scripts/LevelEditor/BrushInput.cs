@@ -26,39 +26,35 @@ namespace Assets.Scripts.LevelEditor
 
 		void Update()
 		{
-			if (Input.GetKeyDown(KeyCode.LeftArrow))
-				transform.position += displacements[0];
-			else if (Input.GetKeyDown(KeyCode.RightArrow))
-				transform.position += displacements[1];
-			else if (Input.GetKeyDown(KeyCode.DownArrow))
-				transform.position += displacements[2];
-			else if (Input.GetKeyDown(KeyCode.UpArrow))
-				transform.position += displacements[3];
-			else if (Input.GetKeyDown(KeyCode.Space))
-				brushes[currentBrushIndex].Paint();
-			else if (Input.GetKeyDown(KeyCode.Tab))
-				NextBrush();
+			if (Input.GetKeyDown (KeyCode.LeftArrow))
+				transform.position += displacements [0];
+			else if (Input.GetKeyDown (KeyCode.RightArrow))
+				transform.position += displacements [1];
+			else if (Input.GetKeyDown (KeyCode.DownArrow))
+				transform.position += displacements [2];
+			else if (Input.GetKeyDown (KeyCode.UpArrow))
+				transform.position += displacements [3];
+			else if (Input.GetKeyDown (KeyCode.Space))
+				brushes [currentBrushIndex].Paint ();
+			else if (Input.GetKeyDown (KeyCode.Tab))
+				NextBrush ();
+			else if (Input.GetKeyDown (KeyCode.Q))
+				NextColor ();
 			else if (Input.GetKeyDown(KeyCode.Return))
 				SaveLevel();
 		}
 
+		void NextColor()
+		{
+			brushes[currentBrushIndex].DestroyIndicator();
+			brushes [currentBrushIndex].NextColor ();
+		}
+
 		void NextBrush()
 		{
-
-			if (brushes [currentBrushIndex].CurrentColorIndex == brushes [currentBrushIndex].ColorsCount - 1)
-			{	
-				brushes[currentBrushIndex].CurrentColorIndex = 0;
-				brushes[currentBrushIndex].DestroyIndicator();
-				currentBrushIndex = (currentBrushIndex + 1) % brushes.Count;
-				brushes[currentBrushIndex].SpawnBrushIndicator();
-			} 
-			else
-			{
-				brushes[currentBrushIndex].DestroyIndicator();
-				brushes [currentBrushIndex].NextColor ();
-			}
-
-
+			brushes[currentBrushIndex].DestroyIndicator();
+			currentBrushIndex = (currentBrushIndex + 1) % brushes.Count;
+			brushes[currentBrushIndex].SpawnBrushIndicator();
 		}
 
 		void SaveLevel()
