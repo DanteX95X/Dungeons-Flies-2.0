@@ -2,12 +2,15 @@
 using System;
 using UnityEngine;
 using Assets.Scripts.Game.Map;
-using Assets.Scripts.Game;
+//using Assets.Scripts.Game;
+using Assets.Scripts.Game.Actors;
 
 namespace Assets.Scripts.Utilities
 {
 	public class PathFinding
 	{
+		public static readonly int IMPASSABILITY_THRESHOLD = 10000;
+
 		public delegate int Heuristic(Field currentField, Field goalField);
 
 		public static List<Field> AStar (Field startField, Field goalField, Heuristic heuristic)
@@ -60,7 +63,7 @@ namespace Assets.Scripts.Utilities
 
 					if (!visited.Contains(neighbour))
 					{
-						int temporaryCostFromStart = costsFromStart[currentField] + 1;
+						int temporaryCostFromStart = costsFromStart[currentField] + CalculateCost(currentField, neighbour);//1;
 
 						if ((! opened.Contains (neighbour)) || (temporaryCostFromStart < costsFromStart [neighbour]))
 						{
@@ -92,6 +95,14 @@ namespace Assets.Scripts.Utilities
 			do
 			{
 				cameFrom.TryGetValue (currentField, out previousField);
+
+				if(CalculateCost(previousField, currentField) >= IMPASSABILITY_THRESHOLD)
+				{
+					result.Clear();
+					Debug.Log("Impassable");
+					return result;
+				}
+
 				result.Add (previousField);
 				currentField = previousField;
 
@@ -99,6 +110,15 @@ namespace Assets.Scripts.Utilities
 			while(currentField != startField);
 
 			result.Reverse ();
+
+			/*for (int i = 0; i < result.Count - 1; ++i)
+			{
+				if (CalculateCost(result[i], result[i + 1]) >= IMPASSABILITY_THRESHOLD)
+				{
+					result.Clear();
+				}
+			}*/
+
 			return result;
 		}
 
@@ -107,6 +127,29 @@ namespace Assets.Scripts.Utilities
 			Vector2 differenceVector = goalField.transform.position - currentField.transform.position;
 			int heuristic = Math.Abs ((int)differenceVector.x) + Math.Abs ((int)differenceVector.y);
 			return heuristic;
+		}
+
+		public static int EmptyHeuristic(Field current, Field goal)
+		{
+			return 0;
+		}
+
+
+		public static int CalculateCost(Field current, Field next)
+		{
+			if (next.ContainsUnitOfType<Player>())
+			{
+				return IMPASSABILITY_THRESHOLD;
+			}
+
+			int cost = 1;
+			foreach (Field neighbour in next.Neighbours.Values)
+			{
+				if (neighbour.ContainsUnitOfType<Player>())
+					cost += 100;
+			}
+				
+			return cost;
 		}
 	}
 }

@@ -82,6 +82,7 @@ namespace Assets.Scripts.States
 			GameObject newPlayer = Instantiate(player, level.PlayersPosition, Quaternion.identity) as GameObject;
 			Game.Game.Instance.CurrentLevel.ActivePlayer = newPlayer.GetComponent<Player>();
 			newPlayer.transform.parent = playersParent.transform;
+			//Game.Game.Instance.CurrentLevel.Grid[newPlayer.transform.position].Units.Add(newPlayer);
 
 			GameObject enemiesParent = new GameObject();
 			enemiesParent.name = "enemies";
@@ -90,6 +91,7 @@ namespace Assets.Scripts.States
 				GameObject newEnemy = Instantiate(enemy, position, Quaternion.identity) as GameObject;
 				Game.Game.Instance.CurrentLevel.Enemies.Add(newEnemy.GetComponent<Enemy>());
 				newEnemy.transform.parent = enemiesParent.transform;
+				//Game.Game.Instance.CurrentLevel.Grid[newEnemy.transform.position].Units.Add(newEnemy);
 			}
 
 			SetCamera(new Vector2[] { maxCoordinates, minCoordinates});

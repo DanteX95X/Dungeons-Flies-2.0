@@ -11,6 +11,8 @@ namespace Assets.Scripts.Game.Actors
 		Vector2 destination;
 		Vector2 movementAxis;
 
+		Vector2 previousPosition;
+
 		Quaternion rotation;
 
 		bool isMoving = false;
@@ -56,6 +58,7 @@ namespace Assets.Scripts.Game.Actors
 
 			destination = (Vector2)transform.position;
 			rotation = (Quaternion)transform.rotation;
+			previousPosition = (Vector2)transform.position;
 		}
 
 		void Update()
@@ -65,6 +68,7 @@ namespace Assets.Scripts.Game.Actors
 				if (Mathf.Abs(destination.x - transform.position.x) < proximityThreshold && Mathf.Abs(destination.y - transform.position.y) < proximityThreshold)
 				{
 					transform.position = new Vector3(destination.x, destination.y, transform.position.z);
+					Game.Instance.CurrentLevel.Grid[previousPosition].Units.Remove(gameObject);
 					Game.Instance.CurrentLevel.Grid[transform.position].Units.Add(gameObject);
 					isMoving = false;
 				}
@@ -95,7 +99,7 @@ namespace Assets.Scripts.Game.Actors
 				return;
 
 			isMoving = true;
-			Game.Instance.CurrentLevel.Grid[transform.position].Units.Remove(gameObject);
+			previousPosition = transform.position;
 			this.destination = destination;
 			movementAxis = (destination - (Vector2)transform.position).normalized;
 
