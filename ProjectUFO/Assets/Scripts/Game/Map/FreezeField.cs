@@ -13,7 +13,6 @@ namespace Assets.Scripts.Game.Map
 		void Start()
 		{
 			type = FieldType.FREEZE;
-			Debug.Log ("Freeze field spawned!");
 		}
 	}
 }

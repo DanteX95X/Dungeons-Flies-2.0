@@ -36,7 +36,7 @@ namespace Assets.Scripts.LevelEditor
 
 		public void NextColor()
 		{
-			Debug.Log (currentColorIndex);
+
 			currentColorIndex = (currentColorIndex + 1) % colors.Count;
 			SpawnBrushIndicator();
 		}
@@ -59,6 +59,7 @@ namespace Assets.Scripts.LevelEditor
 		public void Paint()
 		{
 			GameObject paint = Instantiate(colors[currentColorIndex], new Vector3(indicator.transform.position.x, indicator.transform.position.y, depth), Quaternion.identity) as GameObject;
+			//Debug.Log (currentColorIndex);
 			UpdateLevel(paint);
 		}
 

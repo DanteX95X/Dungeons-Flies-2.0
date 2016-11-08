@@ -6,6 +6,7 @@ namespace Assets.Scripts.Game.Map
 	{
 		CLEAR,
 		FREEZE,
+		VORTEX,
 	}
 }
 

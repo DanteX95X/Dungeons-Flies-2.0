@@ -183,6 +183,7 @@ MonoBehaviour:
   fields:
   - {fileID: 1000011228184538, guid: dd7e3681fc8ea403fb0199383d9da30f, type: 2}
   - {fileID: 1000011435777742, guid: efde39f5dae1942f2be810b5ea733825, type: 2}
+  - {fileID: 1000010776215586, guid: b5a5f3adc481c47d78a94d8b80d7c035, type: 2}
   player: {fileID: 1000012598920258, guid: 5aff87cc3de244b15bbdf2c320f49e9e, type: 2}
   enemy: {fileID: 1000012355221622, guid: 24cb9fe5a2342440f85facce24d5ff62, type: 2}
 --- !u!4 &423709440
