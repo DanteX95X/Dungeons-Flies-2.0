@@ -14,7 +14,13 @@ namespace Assets.Scripts.States
 		#region variables
 
 		[SerializeField]
-		GameObject field = null;
+		GameObject[] fields = null;
+
+		//[SerializeField]
+		//GameObject clearField = null;
+
+		//[SerializeField]
+		//GameObject freezeField = null;
 
 		[SerializeField]
 		GameObject player = null;
@@ -50,14 +56,15 @@ namespace Assets.Scripts.States
 
 			foreach (var fieldInfo in level.Grid)
 			{
-				GameObject tile = Instantiate(field, fieldInfo.first, Quaternion.identity) as GameObject;
-				tile.transform.parent = grid.transform;
-				Game.Game.Instance.CurrentLevel.Grid[tile.transform.position] = tile.GetComponent<Field>();
+					GameObject tile = Instantiate(fields[(int)fieldInfo.second], fieldInfo.first, Quaternion.identity) as GameObject;
+					tile.transform.parent = grid.transform;
 
-				minCoordinates.x = Mathf.Min(minCoordinates.x, tile.transform.position.x);
-				maxCoordinates.x = Mathf.Max(maxCoordinates.x, tile.transform.position.x);
-				minCoordinates.y = Mathf.Min(minCoordinates.y, tile.transform.position.y);
-				maxCoordinates.y = Mathf.Max(maxCoordinates.y, tile.transform.position.y);
+					Game.Game.Instance.CurrentLevel.Grid[tile.transform.position] = tile.GetComponent<Field>();
+
+					minCoordinates.x = Mathf.Min(minCoordinates.x, tile.transform.position.x);
+					maxCoordinates.x = Mathf.Max(maxCoordinates.x, tile.transform.position.x);
+					minCoordinates.y = Mathf.Min(minCoordinates.y, tile.transform.position.y);
+					maxCoordinates.y = Mathf.Max(maxCoordinates.y, tile.transform.position.y);
 			}
 
 			Debug.Log(maxCoordinates + " " + minCoordinates);

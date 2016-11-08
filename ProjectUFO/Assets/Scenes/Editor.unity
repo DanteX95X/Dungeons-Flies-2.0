@@ -269,7 +269,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colors:
   - {fileID: 1000011228184538, guid: dd7e3681fc8ea403fb0199383d9da30f, type: 2}
-  - {fileID: 1000011228184538, guid: dd7e3681fc8ea403fb0199383d9da30f, type: 2}
+  - {fileID: 1000011435777742, guid: efde39f5dae1942f2be810b5ea733825, type: 2}
   depth: 0
 --- !u!114 &1263910335
 MonoBehaviour:
