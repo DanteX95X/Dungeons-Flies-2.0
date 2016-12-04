@@ -1,12 +1,20 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.LevelEditor
 {
 	public class BrushInput : MonoBehaviour
 	{
 		#region variables
+
+		[SerializeField]
+		InputField pathInput = null;
+		[SerializeField]
+		Button cancelButton = null;
+		[SerializeField]
+		Button acceptButton = null;
 
 		static List<Vector3> displacements = new List<Vector3> { new Vector3(-1,0), new Vector3(1,0), new Vector3(0,-1), new Vector3(0,1) };
 
@@ -41,7 +49,8 @@ namespace Assets.Scripts.LevelEditor
 			else if (Input.GetKeyDown (KeyCode.Q))
 				NextColor ();
 			else if (Input.GetKeyDown(KeyCode.Return))
-				SaveLevel();
+				//SaveLevel();
+				ShowInputField();
 		}
 
 		void NextColor()
@@ -57,9 +66,27 @@ namespace Assets.Scripts.LevelEditor
 			brushes[currentBrushIndex].SpawnBrushIndicator();
 		}
 
+		void ShowInputField()
+		{
+			pathInput.gameObject.SetActive(true);
+			acceptButton.gameObject.SetActive(true);
+			cancelButton.gameObject.SetActive(true);
+			enabled = false;
+		}
+
+		void HideInputField()
+		{
+			pathInput.gameObject.SetActive(false);
+			acceptButton.gameObject.SetActive(false);
+			cancelButton.gameObject.SetActive(false);
+			enabled = true;
+		}
+
 		void SaveLevel()
 		{
-			System.IO.File.WriteAllText(Game.Game.Instance.LevelPath, (new LevelInfo(Game.Game.Instance.CurrentLevel)).ToString());
+			Game.Game.Instance.CurrentLevel.LevelName = pathInput.text;
+			System.IO.File.WriteAllText(pathInput.text + ".level", (new LevelInfo(Game.Game.Instance.CurrentLevel)).ToString());
+			HideInputField();
 			Debug.Log("Level saved");
 		}
 

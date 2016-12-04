@@ -42,6 +42,8 @@ namespace Assets.Scripts.States
 
 		void CreateLevel(LevelInfo level)
 		{
+			Game.Game.Instance.CurrentLevel.LevelName = level.LevelName;
+
 			GameObject grid = new GameObject();
 			grid.name = "grid";
 

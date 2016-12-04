@@ -19,6 +19,8 @@ namespace Assets.Scripts.LevelEditor
 
 		List<Vector3> enemiesPositions;
 
+		string levelName;
+
 		#endregion
 
 		#region properties
@@ -38,6 +40,12 @@ namespace Assets.Scripts.LevelEditor
 			get { return enemiesPositions; }
 		}
 
+		public string LevelName
+		{
+			get { return levelName; }
+			set { levelName = value; }
+		}
+
 		#endregion
 
 		#region methods
@@ -46,12 +54,14 @@ namespace Assets.Scripts.LevelEditor
 		{
 			grid = new List<Pair<Vector3, FieldType>>();
 			enemiesPositions = new List<Vector3>();
+			levelName = "";
 		}
 
 		public LevelInfo(Level level)
 		{
 			grid = new List<Pair<Vector3, FieldType>>();
 			enemiesPositions = new List<Vector3>();
+			levelName = level.LevelName;
 
 			foreach (Field field in level.Grid.Values)
 			{
@@ -74,9 +84,14 @@ namespace Assets.Scripts.LevelEditor
 
 			using (StreamReader reader = new StreamReader(path))
 			{
-				string line = reader.ReadLine();
-				int fieldsCount = Int32.Parse(line);
+				string line;
 				string[] words;
+
+				line = reader.ReadLine();
+				levelName = line;
+
+				line = reader.ReadLine();
+				int fieldsCount = Int32.Parse(line);
 
 				for (int i = 0; i < fieldsCount; ++i)
 				{
@@ -105,6 +120,8 @@ namespace Assets.Scripts.LevelEditor
 		public override string ToString()
 		{
 			string levelInfo = "";
+
+			levelInfo += levelName + "\n";
 
 			levelInfo += grid.Count + "\n";
 			foreach (var field in grid)

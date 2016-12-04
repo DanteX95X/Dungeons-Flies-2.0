@@ -13,6 +13,7 @@ namespace Assets.Scripts.Game
 		Dictionary<Vector2, Field> grid;
 		Player player;
 		List<Enemy> enemies;
+		string levelName;
 
 		#endregion
 
@@ -34,6 +35,12 @@ namespace Assets.Scripts.Game
 		{
 			get { return enemies; }
 			set { enemies = value; }
+		}
+
+		public string LevelName
+		{
+			get { return levelName; }
+			set { levelName = value; }
 		}
 
 		#region methods
