@@ -23,20 +23,23 @@ namespace Assets.Scripts.States
 		{
 			UpdateLoop();
 
-			if(currentState != this)
+			/*if(currentState != this)
 			{
 				Destroy(this);
-			}
+			}*/
 		}
 
 		public abstract void Init();
 
 		public abstract void UpdateLoop();
 
-		public void ChangeState<T>() where T : MonoBehaviour
+		public void ChangeState<T>() where T : State
 		{
-			Destroy(this);
-			gameObject.AddComponent<T>();
+			currentState = GetComponent<T>();
+			currentState.enabled = true;
+			enabled = false;
+			//Destroy(this);
+			//gameObject.AddComponent<T>();
 		}
 
 		#endregion
