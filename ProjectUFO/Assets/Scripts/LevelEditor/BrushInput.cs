@@ -15,6 +15,8 @@ namespace Assets.Scripts.LevelEditor
 		Button cancelButton = null;
 		[SerializeField]
 		Button acceptButton = null;
+		[SerializeField]
+		Camera mainCamera = null;
 
 		static List<Vector3> displacements = new List<Vector3> { new Vector3(-1,0), new Vector3(1,0), new Vector3(0,-1), new Vector3(0,1) };
 
@@ -30,18 +32,19 @@ namespace Assets.Scripts.LevelEditor
 			brushes = new List<Brush>(GetComponents<Brush>());
 			currentBrushIndex = 0;
 			brushes[currentBrushIndex].SpawnBrushIndicator();
+			mainCamera.transform.position = new Vector3(transform.position.x, transform.position.y, mainCamera.transform.position.z);
 		}
 
 		void Update()
 		{
-			if (Input.GetKeyDown (KeyCode.LeftArrow))
-				transform.position += displacements [0];
-			else if (Input.GetKeyDown (KeyCode.RightArrow))
-				transform.position += displacements [1];
+			if (Input.GetKeyDown(KeyCode.LeftArrow))
+				Translate(displacements[0]);
+			else if (Input.GetKeyDown(KeyCode.RightArrow))
+				Translate(displacements[1]);
 			else if (Input.GetKeyDown (KeyCode.DownArrow))
-				transform.position += displacements [2];
+				Translate(displacements [2]);
 			else if (Input.GetKeyDown (KeyCode.UpArrow))
-				transform.position += displacements [3];
+				Translate(displacements [3]);
 			else if (Input.GetKeyDown (KeyCode.Space))
 				brushes [currentBrushIndex].Paint ();
 			else if (Input.GetKeyDown (KeyCode.Tab))
@@ -51,6 +54,12 @@ namespace Assets.Scripts.LevelEditor
 			else if (Input.GetKeyDown(KeyCode.Return))
 				//SaveLevel();
 				ShowInputField();
+		}
+
+		void Translate(Vector3 displacement)
+		{
+			transform.position += displacement;
+			mainCamera.transform.position += displacement;
 		}
 
 		void NextColor()

@@ -22,11 +22,6 @@ namespace Assets.Scripts.States
 		public void Update()
 		{
 			UpdateLoop();
-
-			/*if(currentState != this)
-			{
-				Destroy(this);
-			}*/
 		}
 
 		public abstract void Init();
