@@ -49,27 +49,40 @@ namespace Assets.Scripts.States
 		{
 			Game.Game.Instance.CurrentLevel.LevelName = level.LevelName;
 
-			GameObject grid = new GameObject();
-			grid.name = "grid";
+			Vector2 maxCoordinates = new Vector2();
+			Vector2 minCoordinates = new Vector2();
 
-			Vector2 maxCoordinates = new Vector2(float.MinValue, float.MinValue);
-			Vector2 minCoordinates = new Vector2(float.MaxValue, float.MaxValue);
+			CreateBoard(level, out maxCoordinates, out minCoordinates);
+			SetUpNeighbourhood();
+			SetUpPlayer(level);
+			SetUpEnemies(level);
+			SetCamera(new Vector2[] { maxCoordinates, minCoordinates});
+		}
+
+		void CreateBoard(LevelInfo level, out Vector2 maxCoordinates, out Vector2 minCoordinates)
+		{
+			maxCoordinates = new Vector2(float.MinValue, float.MinValue);
+			minCoordinates = new Vector2(float.MaxValue, float.MaxValue);
 
 			foreach (var fieldInfo in level.Grid)
 			{
-					GameObject tile = Instantiate(fields[(int)fieldInfo.second], fieldInfo.first, Quaternion.identity) as GameObject;
-					tile.transform.parent = grid.transform;
+				GameObject grid = new GameObject();
+				grid.name = "grid";
 
-					Game.Game.Instance.CurrentLevel.Grid[tile.transform.position] = tile.GetComponent<Field>();
+				GameObject tile = Instantiate(fields[(int)fieldInfo.second], fieldInfo.first, Quaternion.identity) as GameObject;
+				tile.transform.parent = grid.transform;
 
-					minCoordinates.x = Mathf.Min(minCoordinates.x, tile.transform.position.x);
-					maxCoordinates.x = Mathf.Max(maxCoordinates.x, tile.transform.position.x);
-					minCoordinates.y = Mathf.Min(minCoordinates.y, tile.transform.position.y);
-					maxCoordinates.y = Mathf.Max(maxCoordinates.y, tile.transform.position.y);
+				Game.Game.Instance.CurrentLevel.Grid[tile.transform.position] = tile.GetComponent<Field>();
+
+				minCoordinates.x = Mathf.Min(minCoordinates.x, tile.transform.position.x);
+				maxCoordinates.x = Mathf.Max(maxCoordinates.x, tile.transform.position.x);
+				minCoordinates.y = Mathf.Min(minCoordinates.y, tile.transform.position.y);
+				maxCoordinates.y = Mathf.Max(maxCoordinates.y, tile.transform.position.y);
 			}
+		}
 
-			Debug.Log(maxCoordinates + " " + minCoordinates);
-
+		void SetUpNeighbourhood()
+		{
 			foreach (Field field in Game.Game.Instance.CurrentLevel.Grid.Values)
 			{
 				List<Vector2> displacements = new List<Vector2> { new Vector2(1, 0), new Vector2(0, 1), new Vector2(-1, 0), new Vector2(0, -1) };
@@ -83,14 +96,19 @@ namespace Assets.Scripts.States
 				}
 
 			}
-				
+		}
+
+		void SetUpPlayer(LevelInfo level)
+		{
 			GameObject playersParent = new GameObject();
 			playersParent.name = "players";
 			GameObject newPlayer = Instantiate(player, level.PlayersPosition, Quaternion.identity) as GameObject;
 			Game.Game.Instance.CurrentLevel.ActivePlayer = newPlayer.GetComponent<Player>();
 			newPlayer.transform.parent = playersParent.transform;
-			//Game.Game.Instance.CurrentLevel.Grid[newPlayer.transform.position].Units.Add(newPlayer);
+		}
 
+		void SetUpEnemies(LevelInfo level)
+		{
 			GameObject enemiesParent = new GameObject();
 			enemiesParent.name = "enemies";
 			foreach (Vector3 position in level.EnemiesPositions)
@@ -98,10 +116,7 @@ namespace Assets.Scripts.States
 				GameObject newEnemy = Instantiate(enemy, position, Quaternion.identity) as GameObject;
 				Game.Game.Instance.CurrentLevel.Enemies.Add(newEnemy.GetComponent<Enemy>());
 				newEnemy.transform.parent = enemiesParent.transform;
-				//Game.Game.Instance.CurrentLevel.Grid[newEnemy.transform.position].Units.Add(newEnemy);
 			}
-
-			SetCamera(new Vector2[] { maxCoordinates, minCoordinates});
 		}
 
 		void SetCamera(Vector2[] positions)

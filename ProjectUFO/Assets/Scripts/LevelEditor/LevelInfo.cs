@@ -84,36 +84,52 @@ namespace Assets.Scripts.LevelEditor
 
 			using (StreamReader reader = new StreamReader(path))
 			{
-				string line;
-				string[] words;
+				LoadLevelName(reader);
+				LoadBoard(reader);
+				LoadPlayer(reader);
+				LoadEnemies(reader);
+			}
+		}
 
-				line = reader.ReadLine();
-				levelName = line;
+		void LoadLevelName(StreamReader reader)
+		{
+			string line = reader.ReadLine();
+			levelName = line;
+		}
 
-				line = reader.ReadLine();
-				int fieldsCount = Int32.Parse(line);
+		void LoadBoard(StreamReader reader)
+		{
+			string line = reader.ReadLine();
+			int fieldsCount = Int32.Parse(line);
+			string[] words;
 
-				for (int i = 0; i < fieldsCount; ++i)
-				{
-					line = reader.ReadLine();
-					words = line.Split();
-					grid.Add(new Pair<Vector3, FieldType>(new Vector3(Int32.Parse(words[0]), Int32.Parse(words[1]), Int32.Parse(words[2])), (FieldType)Int32.Parse(words[3])));
-
-				}
-
+			for (int i = 0; i < fieldsCount; ++i)
+			{
 				line = reader.ReadLine();
 				words = line.Split();
-				playersPosition = new Vector3(Int32.Parse(words[0]), Int32.Parse(words[1]), Int32.Parse(words[2]));
+				grid.Add(new Pair<Vector3, FieldType>(new Vector3(Int32.Parse(words[0]), Int32.Parse(words[1]), Int32.Parse(words[2])), (FieldType)Int32.Parse(words[3])));
 
+			}
+		}
+
+		void LoadPlayer(StreamReader reader)
+		{
+			string line = reader.ReadLine();
+			string[] words = line.Split();
+			playersPosition = new Vector3(Int32.Parse(words[0]), Int32.Parse(words[1]), Int32.Parse(words[2]));
+		}
+
+		void LoadEnemies(StreamReader reader)
+		{
+			string line = reader.ReadLine();
+			int enemiesCount = Int32.Parse(line);
+			string[] words;
+
+			for (int i = 0; i < enemiesCount; ++i)
+			{
 				line = reader.ReadLine();
-				int enemiesCount = Int32.Parse(line);
-
-				for (int i = 0; i < enemiesCount; ++i)
-				{
-					line = reader.ReadLine();
-					words = line.Split();
-					enemiesPositions.Add(new Vector3(Int32.Parse(words[0]), Int32.Parse(words[1]), Int32.Parse(words[2])));
-				}
+				words = line.Split();
+				enemiesPositions.Add(new Vector3(Int32.Parse(words[0]), Int32.Parse(words[1]), Int32.Parse(words[2])));
 			}
 		}
 
