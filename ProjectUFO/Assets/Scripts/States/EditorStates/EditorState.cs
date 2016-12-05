@@ -28,7 +28,8 @@ namespace Assets.Scripts.States
 
 		public override void CleanUp()
 		{
-			brushObject.SetActive(false);
+			if(brushObject != null)
+				brushObject.SetActive(false);
 		}
 
 		#endregion
