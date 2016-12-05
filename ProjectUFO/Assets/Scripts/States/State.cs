@@ -13,10 +13,15 @@ namespace Assets.Scripts.States
 
 		#region methods
 
-		public void Start()
+		public void OnEnable()
 		{
 			currentState = this;
 			Init();
+		}
+
+		public void OnDisable()
+		{
+			CleanUp();
 		}
 
 		public void Update()
@@ -28,13 +33,12 @@ namespace Assets.Scripts.States
 
 		public abstract void UpdateLoop();
 
+		public abstract void CleanUp();
+
 		public void ChangeState<T>() where T : State
 		{
-			currentState = GetComponent<T>();
-			currentState.enabled = true;
 			enabled = false;
-			//Destroy(this);
-			//gameObject.AddComponent<T>();
+			GetComponent<T>().enabled = true;
 		}
 
 		#endregion

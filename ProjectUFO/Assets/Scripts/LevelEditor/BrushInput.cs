@@ -10,12 +10,6 @@ namespace Assets.Scripts.LevelEditor
 		#region variables
 
 		[SerializeField]
-		InputField pathInput = null;
-		[SerializeField]
-		Button cancelButton = null;
-		[SerializeField]
-		Button acceptButton = null;
-		[SerializeField]
 		Camera mainCamera = null;
 
 		static List<Vector3> displacements = new List<Vector3> { new Vector3(-1,0), new Vector3(1,0), new Vector3(0,-1), new Vector3(0,1) };
@@ -51,9 +45,9 @@ namespace Assets.Scripts.LevelEditor
 				NextBrush ();
 			else if (Input.GetKeyDown (KeyCode.Q))
 				NextColor ();
-			else if (Input.GetKeyDown(KeyCode.Return))
+			//else if (Input.GetKeyDown(KeyCode.Return))
 				//SaveLevel();
-				ShowInputField();
+				//ShowInputField();
 		}
 
 		void Translate(Vector3 displacement)
@@ -73,30 +67,6 @@ namespace Assets.Scripts.LevelEditor
 			brushes[currentBrushIndex].DestroyIndicator();
 			currentBrushIndex = (currentBrushIndex + 1) % brushes.Count;
 			brushes[currentBrushIndex].SpawnBrushIndicator();
-		}
-
-		void ShowInputField()
-		{
-			pathInput.gameObject.SetActive(true);
-			acceptButton.gameObject.SetActive(true);
-			cancelButton.gameObject.SetActive(true);
-			enabled = false;
-		}
-
-		void HideInputField()
-		{
-			pathInput.gameObject.SetActive(false);
-			acceptButton.gameObject.SetActive(false);
-			cancelButton.gameObject.SetActive(false);
-			enabled = true;
-		}
-
-		void SaveLevel()
-		{
-			Game.Game.Instance.CurrentLevel.LevelName = pathInput.text;
-			System.IO.File.WriteAllText(pathInput.text + ".level", (new LevelInfo(Game.Game.Instance.CurrentLevel)).ToString());
-			HideInputField();
-			Debug.Log("Level saved");
 		}
 
 		#endregion

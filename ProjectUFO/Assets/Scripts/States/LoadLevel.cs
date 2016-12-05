@@ -40,6 +40,11 @@ namespace Assets.Scripts.States
 			ChangeState<DummyState>();
 		}
 
+		public override void CleanUp()
+		{
+			
+		}
+
 		void CreateLevel(LevelInfo level)
 		{
 			Game.Game.Instance.CurrentLevel.LevelName = level.LevelName;

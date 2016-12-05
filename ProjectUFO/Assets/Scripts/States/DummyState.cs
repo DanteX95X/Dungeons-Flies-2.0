@@ -10,12 +10,17 @@ namespace Assets.Scripts.States
     {
         public override void Init()
         {
-			Debug.Log("Dummy State" + Game.Game.Instance.CurrentLevel.LevelName);
+			Debug.Log("Dummy State");
         }
 
         public override void UpdateLoop()
         {
 
         }
+
+		public override void CleanUp()
+		{
+			
+		}
     }
 }
