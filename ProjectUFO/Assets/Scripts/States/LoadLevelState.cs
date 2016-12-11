@@ -14,6 +14,9 @@ namespace Assets.Scripts.States
 	{
 		#region variables
 
+		Vector2 maxCoordinates = new Vector2();
+		Vector2 minCoordinates = new Vector2();
+
 		[SerializeField]
 		GameObject[] fields = null;
 
@@ -27,6 +30,9 @@ namespace Assets.Scripts.States
 		Button loadButton = null;
 
 		[SerializeField]
+		Button backButton = null;
+
+		[SerializeField]
 		InputField levelNameInput = null;
 
 		#endregion
@@ -36,6 +42,7 @@ namespace Assets.Scripts.States
 		public override void Init()
 		{
 			loadButton.gameObject.SetActive(true);
+			backButton.gameObject.SetActive(true);
 			levelNameInput.gameObject.SetActive(true);
 		}
 
@@ -48,34 +55,48 @@ namespace Assets.Scripts.States
 		{
 			if(loadButton)
 				loadButton.gameObject.SetActive(false);
+			if (backButton)
+				backButton.gameObject.SetActive(false);
 			if(levelNameInput)
 				levelNameInput.gameObject.SetActive(false);
 		}
 
 
-		public void LoadLevel()
+		void LoadLevel()
 		{
 			Game.Game.Instance.CurrentLevel.Grid.Clear();
 			Game.Game.Instance.CurrentLevel.Grid = new Dictionary<Vector2, Field>();
 
 			LevelInfo info = new LevelInfo(/*Game.Game.Instance.LevelPath*/ levelNameInput.text + ".level");
 			CreateLevel(info);
+		}
 
+		public void LoadGame()
+		{
+			LoadLevel();
+			SetCamera(new Vector2[] { maxCoordinates, minCoordinates});
 			ChangeState<DummyState>();
+		}
+
+		public void LoadEditor()
+		{
+			LoadLevel();
+			ChangeState<EditorState>();
+		}
+
+		public void BackEditor()
+		{
+			ChangeState<EditorMenuState>();
 		}
 
 		void CreateLevel(LevelInfo level)
 		{
 			Game.Game.Instance.CurrentLevel.LevelName = level.LevelName;
 
-			Vector2 maxCoordinates = new Vector2();
-			Vector2 minCoordinates = new Vector2();
-
 			CreateBoard(level, out maxCoordinates, out minCoordinates);
 			SetUpNeighbourhood();
 			SetUpPlayer(level);
 			SetUpEnemies(level);
-			SetCamera(new Vector2[] { maxCoordinates, minCoordinates});
 		}
 
 		void CreateBoard(LevelInfo level, out Vector2 maxCoordinates, out Vector2 minCoordinates)
