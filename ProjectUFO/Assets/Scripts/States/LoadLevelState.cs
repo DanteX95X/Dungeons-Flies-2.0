@@ -5,11 +5,12 @@ using Assets.Scripts.Game.Map;
 using System.Collections.Generic;
 using Assets.Scripts.LevelEditor;
 using Assets.Scripts.Game.Actors;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.States
 {
 	
-	public class LoadLevel : State
+	public class LoadLevelState : State
 	{
 		#region variables
 
@@ -22,27 +23,45 @@ namespace Assets.Scripts.States
 		[SerializeField]
 		GameObject enemy = null;
 
+		[SerializeField]
+		Button loadButton = null;
+
+		[SerializeField]
+		InputField levelNameInput = null;
+
 		#endregion
 
 		#region methods
 
 		public override void Init()
 		{
-			Game.Game.Instance.CurrentLevel.Grid.Clear();
-			Game.Game.Instance.CurrentLevel.Grid = new Dictionary<Vector2, Field>();
-
-			LevelInfo info = new LevelInfo(Game.Game.Instance.LevelPath);
-			CreateLevel(info);
+			loadButton.gameObject.SetActive(true);
+			levelNameInput.gameObject.SetActive(true);
 		}
 
 		public override void UpdateLoop()
 		{
-			ChangeState<DummyState>();
+			
 		}
 
 		public override void CleanUp()
 		{
-			
+			if(loadButton)
+				loadButton.gameObject.SetActive(false);
+			if(levelNameInput)
+				levelNameInput.gameObject.SetActive(false);
+		}
+
+
+		public void LoadLevel()
+		{
+			Game.Game.Instance.CurrentLevel.Grid.Clear();
+			Game.Game.Instance.CurrentLevel.Grid = new Dictionary<Vector2, Field>();
+
+			LevelInfo info = new LevelInfo(/*Game.Game.Instance.LevelPath*/ levelNameInput.text + ".level");
+			CreateLevel(info);
+
+			ChangeState<DummyState>();
 		}
 
 		void CreateLevel(LevelInfo level)
@@ -64,11 +83,11 @@ namespace Assets.Scripts.States
 			maxCoordinates = new Vector2(float.MinValue, float.MinValue);
 			minCoordinates = new Vector2(float.MaxValue, float.MaxValue);
 
+			GameObject grid = new GameObject();
+			grid.name = "grid";
+
 			foreach (var fieldInfo in level.Grid)
 			{
-				GameObject grid = new GameObject();
-				grid.name = "grid";
-
 				GameObject tile = Instantiate(fields[(int)fieldInfo.second], fieldInfo.first, Quaternion.identity) as GameObject;
 				tile.transform.parent = grid.transform;
 
